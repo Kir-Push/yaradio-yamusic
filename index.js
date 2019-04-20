@@ -14,7 +14,8 @@ if (process.env.node_env == 'dev')
     showDevTools: 'undocked'
   });
 
-let win;
+let win
+
 let appRunning = app.requestSingleInstanceLock();
 
 if (!appRunning) {
@@ -54,10 +55,7 @@ function createWindow() {
     }
   })
   win.loadURL((() => {
-    if (lastApp == 'YaMusic') {
       return 'https://music.yandex.ru/'
-    }
-    return 'https://radio.yandex.ru/'
   })());
 
   win.on('close', e => {
@@ -81,17 +79,10 @@ function createWindow() {
 
   win.on('page-title-updated', e => {
     let history = e.sender.webContents.history;
-    if (/radio/.test(history[history.length - 1])) {
-      win.setTitle('YaRadio');
-      if (process.platform !== 'darwin') {
-        win.setIcon(path.join(__dirname, 'media/icon', 'yaradio_32x32.png'));
-      }
-    } else {
       win.setTitle('YaMusic');
       if (process.platform !== 'darwin') {
         win.setIcon(path.join(__dirname, 'media/icon', 'yamusic_32x32.png'));
       }
-    }
     e.preventDefault();
   });
 

@@ -4,21 +4,30 @@ const {
 
 function shortcutTpl(win) {
   return [{
-      accelerator: 'MediaPlayPause',
+      accelerator: 'shift+F1',
       func: () => win.send('play'),
     },
     {
-      accelerator: 'MediaNextTrack',
+      accelerator: 'shift+F3',
       func: () => win.send('next'),
     },
     {
-      accelerator: 'MediaPreviousTrack',
+      accelerator: 'shift+F2',
       func: () => win.send('prev'),
     },
     {
-      accelerator: 'VolumeMute',
+      accelerator: 'shift+F6',
       func: () => win.send('mute'),
     },
+     {
+      accelerator: 'shift+F5',
+      func: () => win.send('like'),
+    },
+     {
+      accelerator: 'shift+F4',
+      func: () => win.send('dislike'),
+    },
+    
   ]
 }
 
@@ -26,11 +35,11 @@ exports.init = (win, app) => {
   const tplShortcut = shortcutTpl(win);
 
   tplShortcut.forEach((e)=>{
-    globalShortcut.register(e.accelerator, e.func);
+    globalShortcut.register(e.accelerator, e.func)
   })
 
   app.on('will-quit', () => {
     // Unregister all shortcuts.
-    globalShortcut.unregisterAll();
+    globalShortcut.unregisterAll()
   })
 }
